@@ -1,0 +1,87 @@
+/* src/index.css */
+
+@font-face
+        {
+            font-family: 'Arabic';
+            src: url('/public/fonts/Arabic/Arabic.ttf');
+        }
+
+        @font-face {
+          font-family: 'Agrandir-regular';
+          src: url('/public/fonts/Agrandir/Agrandir-Regular.otf');
+        }
+        @font-face {
+          font-family: 'Agrandir-bold';
+          src: url('/public/fonts/Agrandir/Agrandir-TextBold.otf');
+        }
+        @font-face {
+          font-family: 'Agrandir-light';
+          src: url('/public/fonts/Agrandir/Agrandir-WideLight.otf');
+        }
+        
+        @font-face {
+          font-family: 'Helvetica-regular';
+          src: url('/public/fonts/Helvetica/HelveticaNowDisplay-Regular.ttf');
+        }
+        @font-face {
+          font-family: 'Helvetica-bold';
+          src: url('/public/fonts/Helvetica/HelveticaNowDisplay-Bold.ttf');
+        }
+        @font-face {
+          font-family: 'Helvetica-light';
+          src: url('/public/fonts/Helvetica/HelveticaNowDisplay-Light.ttf');
+        }
+        @font-face {
+          font-family: 'Helvetica-thin';
+          src: url('/public/fonts/Helvetica/HelveticaNowDisplay-Thin.ttf');
+        }
+        @font-face {
+          font-family: 'Helvetica-black';
+          src: url('/public/fonts/Helvetica/HelveticaNowDisplay-Black.ttf');
+        }
+        @font-face {
+          font-family: 'Helvetica-medium';
+          src: url('/public/fonts/Helvetica/HelveticaNowDisplay-Medium.ttf');
+        }
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.font-sans {
+  font-family: "Open Sans", sans-serif;
+}
+
+
+*, *::after, *::before {
+  padding: 0;
+  margin: 0;
+  box-sizing: inherit;
+  scroll-behavior: smooth;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+
+
+::-webkit-scrollbar {
+  width: 3px;
+  height: 3px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: black;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
