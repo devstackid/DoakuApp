@@ -6,32 +6,110 @@ use App\Models\Category;
 use App\Models\ContentDoa;
 use App\Models\Event;
 use App\Models\Favorite;
-use App\Models\History;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Inertia\Response;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
 class LandingController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         $user = Auth::user();
 
-        // Jika user sudah login, ambil data favorites berdasarkan user_id
         $favorites = [];
         if ($user) {
             $favorites = Favorite::where('user_id', $user->id)->pluck('doa_id')->toArray();
         }
+        $response = Http::get('https://api.alquran.cloud/v1/surah');
+        $allSurahs = collect($response->json()['data'] ?? []);
+
+        $currentPage = request()->get('page', 1);
+        $perPage = 5;
+
+        $pagedSurahs = $allSurahs->forPage($currentPage, $perPage);
+
+        // Buat paginator manual
+        $surahs = new LengthAwarePaginator(
+            $pagedSurahs,
+            $allSurahs->count(),
+            $perPage,
+            $currentPage,
+            ['path' => url()->current()] // Atau request()->url()
+        );
         return Inertia::render('Landing/Landing', [
             'canLogin' => Route::has('login'),
+            'surahs' => $surahs,
             'canRegister' => Route::has('register'),
+            'content' => ContentDoa::with('category')->paginate(5),
+            'categories' => Category::all(),
+            'favorites' => $favorites,
+        ]);
+    }
+
+    public function doaIndex()
+    {
+        $user = Auth::user();
+
+        $favorites = [];
+        if ($user) {
+            $favorites = Favorite::where('user_id', $user->id)->pluck('doa_id')->toArray();
+        }
+       
+        return Inertia::render('Landing/Doa', [
             'content' => ContentDoa::with('category')->get(),
             'categories' => Category::all(),
             'favorites' => $favorites,
         ]);
     }
+
+    public function quranIndex()
+    {
+              
+        $response = Http::get('https://api.alquran.cloud/v1/surah');
+        $data = $response->json();
+        return Inertia::render('Landing/Quran', [
+            'canLogin' => Route::has('login'),
+            'surahs' => $data['data'] ?? []
+        ]);
+    }
+
+    public function show($number)
+    {
+        // Ambil teks Arab
+        $arab = Http::get("https://api.alquran.cloud/v1/surah/{$number}");
+        $arabData = $arab->json()['data']['ayahs'];
+
+        // Ambil terjemahan Indonesia
+        $indo = Http::get("https://api.alquran.cloud/v1/surah/{$number}/id.indonesian");
+        $indoData = $indo->json()['data']['ayahs'];
+
+        // Gabungkan ayat berdasarkan urutan
+        $ayahs = collect($arabData)->zip($indoData)->map(function ($pair) {
+            return [
+                'numberInSurah' => $pair[0]['numberInSurah'],
+                'text_arab'     => $pair[0]['text'],
+                'juz'           => $pair[0]['juz'],
+                'translation'   => $pair[1]['text'],
+            ];
+        });
+
+        return Inertia::render('Landing/Show', [
+            'surah' => [
+                'number' => $number,
+                'name'   => $arab->json()['data']['name'],
+                'englishName' => $arab->json()['data']['englishName'],
+                'englishNameTranslation' => $arab->json()['data']['englishNameTranslation'],
+                'numberOfAyahs' => $arab->json()['data']['numberOfAyahs'],
+                'ayahs' => $ayahs,
+            ],
+        ]);
+    }
+
 
 
     public function tampilDoa($id)
@@ -55,35 +133,35 @@ class LandingController extends Controller
             ->orderBy('tanggal', 'asc')
             ->limit(5)
             ->get();
-    
+
         $pastEvents = Event::where('tanggal', '<', now())
             ->orderBy('tanggal', 'desc')
             ->limit(5)
             ->get();
-    
+
         return Inertia::render('Landing/Kalender', [
             'upcomingEvents' => $upcomingEvents,
             'pastEvents' => $pastEvents
         ]);
     }
-    
+
 
     public function koleksiIndex($id)
-{
-    $user = Auth::user();
-    $favorites = [];
+    {
+        $user = Auth::user();
+        $favorites = [];
 
-    if ($user) {
-        // Mengambil data favorite dengan relasi doa dan user
-        $favorites = Favorite::with('doa.category', 'user')
-            ->where('user_id', $user->id)
-            ->get();
+        if ($user) {
+            // Mengambil data favorite dengan relasi doa dan user
+            $favorites = Favorite::with('doa.category', 'user')
+                ->where('user_id', $user->id)
+                ->get();
+        }
+
+        return Inertia::render('Landing/Koleksi', [
+            'favorites' => $favorites
+        ]);
     }
-
-    return Inertia::render('Landing/Koleksi', [
-        'favorites' => $favorites
-    ]);
-}
 
 
 
@@ -105,6 +183,7 @@ class LandingController extends Controller
 
         return response()->json(['message' => 'Doa ditambahkan ke favorit'], 200);
     }
+
 
     // hapus favorit
     public function remove($id)

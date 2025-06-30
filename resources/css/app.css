@@ -64,24 +64,3 @@ html {
   box-sizing: border-box;
 }
 
-
-
-::-webkit-scrollbar {
-  width: 3px;
-  height: 3px;
-}
-
-/* Track */
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: black;
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: #555;
-}

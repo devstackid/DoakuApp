@@ -1,109 +1,117 @@
 /* eslint-disable no-undef */
 import clsx from "clsx";
-import { BiMailSend, BiPhone } from "react-icons/bi";
-import { FaXmark } from "react-icons/fa6";
+import { BiSearch } from "react-icons/bi";
 import { Link } from "@inertiajs/react";
-import { useEffect, useState } from "react";
+import { FaGoogle } from "react-icons/fa";
 
 const NavbarOffcanvas = ({
     isNavVisible,
     handleLinkClick,
-    handleDropdownButtonClick,
+    setSearchQuery2,
+    filteredContent2,
     auth,
+    searchQuery2,
 }) => {
     const LinkClass =
         "text-xl lg:text-2xl capitalize font-[Helvetica-regular] w-max text-black hover:text-teal-400 transition ";
 
-        const [namaAplikasi, setNamaAplikasi] = useState("");
-        const [deskripsiAplikasi, setDeskripsiAplikasi] = useState("");
-    
-        
-        useEffect(() => {
-            axios.get('/navbar-config')
-                .then(response => {
-                    setNamaAplikasi(response.data.nama_aplikasi); 
-                    setDeskripsiAplikasi(response.data.deskripsi_aplikasi); 
-                })
-                .catch(error => {
-                    console.error("Error fetching navbar config:", error);
-                });
-            
-        }, []);
-
     return (
         <nav
             className={clsx(
-                "fixed lg:left-20 lg:right-20 left-0 right-0 bottom-0 top-0 lg:top-5 lg:bottom-5 lg:rounded z-[200] lg:items-center bg-white lg:bg-neutral-100 shadow-inner lg:shadow-none transition-opacity flex justify-center gap-2 duration-500 ",
+                "fixed lg:left-20 lg:right-20 left-0 right-0 bottom-0 top-20 lg:top-5 lg:bottom-5 lg:rounded z-[200] lg:items-center bg-white lg:bg-neutral-100  lg:shadow-none transition-opacity px-5 gap-2 duration-500 ",
                 isNavVisible ? "opacity-100" : "opacity-0 pointer-events-none"
             )}
         >
-            <div className="absolute top-10 right-10 lg:right-20 z-50">
-                <button
-                    onClick={handleDropdownButtonClick}
-                    className={clsx(
-                        "text-black  flex transition-opacity items-center justify-center text-3xl font-thin"
-                    )}
+            <div className="">
+                <form
+                    onSubmit={(e) => e.preventDefault()}
+                    className="relative flex items-center"
                 >
-                    <FaXmark />
-                </button>
-            </div>
-            <div className="flex lg:flex-row flex-col gap-3">
-                <div className="flex flex-col gap-3 md:pt-0 relative z-30 pt-24">
-                    <h1 className="font-[Helvetica-bold] text-black  tracking-wide text-3xl lg:text-5xl">
-                {namaAplikasi || "Doa"}
-                        
-                    </h1>
-                    <p className="font-[Helvetica-regular] text-black  text-base lg:text-xl tracking-wide max-w-[340px]">
-                    {deskripsiAplikasi || "deskripsi"}
-
-                    </p>
-
-                    <div className="flex items-center gap-3">
-                        <BiPhone className="lg:w-10 lg:h-10 h-7 w-7 p-1 rounded-full border border-teal-400 text-teal-500" />{" "}
-                        <span className="text-black  font-[Helvetica-regular] text-base tracking-wide">
-                            +62 895631780343
-                        </span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                        <BiMailSend className="lg:w-10 lg:h-10 h-7 w-7 p-1 rounded-full border border-teal-400 text-teal-500" />{" "}
-                        <span className="text-black  font-[Helvetica-regular] text-base tracking-wide">
-                            devstackweb@gmail.com
-                        </span>
-                    </div>
-                </div>
-
-                <div className="flex flex-col gap-3 md:pt-0 relative z-30 mt-10 lg:mt-0">
+                    <input
+                        type="text"
+                        className="rounded-md pl-10 border border-neutral-200 w-full text-sm tracking-wide font-[Helvetica-regular] text-black placeholder:text-black/70 py-2.5"
+                        name="search"
+                        id="search2"
+                        placeholder="Cari Doa.."
+                        value={searchQuery2}
+                        onChange={(e) => setSearchQuery2(e.target.value)}
+                        autoComplete="off"
+                    />
+                    <label htmlFor="search2" className="absolute left-3">
+                        <BiSearch className="  w-5 h-5" />
+                    </label>
+                </form>
+                {searchQuery2.length > 0 && (
+                    <>
+                        <div
+                            onClick={() => setSearchQuery2("")}
+                            className="mb-2"
+                        >
+                            <div
+                                id="pencarian"
+                                onClick={(e) => e.stopPropagation()} // ⛔ Cegah bubbling
+                                className="h-max"
+                            >
+                                <div className="max-h-[30vh] overflow-y-auto border mt-1 rounded-md">
+                                    {filteredContent2.map((data, i) => (
+                                        <Link
+                                            className="block hover:text-blue-700 hover:bg-neutral-50 transition text-black/70 text-sm px-5 border-b bg-white font-[Helvetica-Regular] py-4"
+                                            href={route("doa.show", [data.id])}
+                                            key={i}
+                                        >
+                                            {data.title}
+                                        </Link>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    </>
+                )}
+                <div className="flex flex-col gap-3 md:pt-0 relative z-30 mt-3 lg:mt-0">
                     <a href="/" onClick={handleLinkClick} className={LinkClass}>
                         Beranda
                     </a>
                     <a href="" onClick={handleLinkClick} className={LinkClass}>
-                        Cari
+                        Al-Qur&apos;an
                     </a>
                     <a href="" onClick={handleLinkClick} className={LinkClass}>
-                        Koleksi
+                        Kumpulan Doa
                     </a>
+                    <hr />
                     {auth.user ? (
-                        <Link href={route("logout")} method="post" as="button" className={LinkClass}>
-                            Logout
-                        </Link>
-                    ) : (
-                        <a
-                            href={route("login")}
-                            onClick={handleLinkClick}
+                        <Link
+                            href={route("logout")}
+                            method="post"
+                            as="button"
                             className={LinkClass}
                         >
-                            Masuk
-                        </a>
+                            Keluar
+                        </Link>
+                    ) : (
+                        <>
+                            <Link
+                                href={route("login")}
+                                className="flex items-center text-center bg-blue-700 text-white justify-center gap-3 py-2.5 px-4 rounded-3xl border text-base tracking-wide font-[Helvetica-Regular]"
+                            >
+                                Masuk
+                            </Link>
+                            <div className="flex items-center gap-2">
+                                <hr className="w-full" />
+                                <span className="text-xs font-[Helvetica-Regular] text-black/50">
+                                    atau
+                                </span>
+                                <hr className="w-full" />
+                            </div>
+                            <Link
+                                href="/auth/redirect/google"
+                                className="flex items-center text-center justify-center gap-3 py-2.5 px-4 rounded-3xl border text-base tracking-wide font-[Helvetica-Regular]"
+                            >
+                                <FaGoogle className="text-orange-400" />{" "}
+                                Lanjutkan dengan Google
+                            </Link>
+                        </>
                     )}
                 </div>
-                
-            </div>
-
-            <div className="absolute font-[Helvetica-regular] py-5 lg:px-10 px-5 text-black  top-0 left-0 right-0 lg:flex items-center justify-between">
-                <h1 className="text-sm mb-2 lg:mb-0">
-                {namaAplikasi || "Doa"}
-                </h1>
-                
             </div>
         </nav>
     );

@@ -14,8 +14,6 @@ const Users = ({ auth, users }) => {
         email: "",
         password: "",
         phone: "",
-        
-        
         role: "",
     });
 

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Auth\OAuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ConfigController;
 use App\Http\Controllers\DoaController;
@@ -20,8 +21,11 @@ use Inertia\Inertia;
 
 Route::get('/', [LandingController::class, 'index'])->name('home');
 
+Route::get('/doa', [LandingController::class, 'doaIndex'])->name('doa.index');
 Route::get('/doa/{id}', [LandingController::class, 'tampilDoa'])->name('doa.show');
 Route::get('/kalender', [LandingController::class, 'kalenderIndex'])->name('kalender.index');
+Route::get('/quran', [LandingController::class, 'quranIndex'])->name('quran.index');
+
 
 Route::get('/navbar-config', function () {
     $config = Config::first();
@@ -30,6 +34,19 @@ Route::get('/navbar-config', function () {
         'deskripsi_aplikasi' => $config->deskripsi_aplikasi, // Menambahkan deskripsi_aplikasi
     ]);
 });
+
+Route::get('/api/content', function () {
+    $content = ContentDoa::all();
+    return response()->json([
+        'content' => $content,
+    ]);
+});
+
+Route::get('/auth/redirect/{provider}', [OAuthController::class, 'redirect']);
+Route::get('/auth/callback/{provider}', [OAuthController::class, 'callback']);
+Route::get('/quran/{number}', [LandingController::class, 'show'])->name('quran.show');
+
+
 
 
 
