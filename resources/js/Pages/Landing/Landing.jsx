@@ -2,28 +2,13 @@
 import { useEffect, useState } from "react";
 import Guest from "@/Layouts/GuestLayout";
 import { Head, Link, usePage } from "@inertiajs/react";
-import { BiSearch } from "react-icons/bi";
 import { FaHeart } from "react-icons/fa6";
 import { BiHeart } from "react-icons/bi";
 import axios from "axios";
 
-function Landing({ content, categories, favorites: initialFavorites }) {
+function Landing({ favorites: initialFavorites, content, surahs }) {
     const { auth } = usePage().props;
-    const [selectedCategory, setSelectedCategory] = useState("semua");
     const [favorites, setFavorites] = useState(initialFavorites);
-    const [searchQuery, setSearchQuery] = useState(""); // State untuk pencarian
-
-    const filteredContent = content
-        .filter((doa) => {
-            if (selectedCategory === "semua") return true;
-            return doa.category.name === selectedCategory;
-        })
-        .filter((doa) => {
-            // Filter berdasarkan pencarian
-            return doa.title.toLowerCase().includes(searchQuery.toLowerCase());
-        });
-
-    // Fungsi untuk toggle favorite (add/remove)
     const handleFavoriteToggle = (doaId) => {
         if (!auth.user) {
             window.location.href = route("login");
@@ -39,7 +24,7 @@ function Landing({ content, categories, favorites: initialFavorites }) {
                     );
                 })
                 .catch((error) => {
-                    console.error("Error removing favorite:", error);
+                    // console.error("Error removing favorite:", error);
                 });
         } else {
             axios
@@ -48,25 +33,10 @@ function Landing({ content, categories, favorites: initialFavorites }) {
                     setFavorites((prevFavorites) => [...prevFavorites, doaId]);
                 })
                 .catch((error) => {
-                    console.error("Error adding favorite:", error);
+                    // console.error("Error adding favorite:", error);
                 });
         }
     };
-
-    const [namaAplikasi, setNamaAplikasi] = useState("");
-    const [deskripsiAplikasi, setDeskripsiAplikasi] = useState("");
-
-    useEffect(() => {
-        axios
-            .get("/navbar-config")
-            .then((response) => {
-                setNamaAplikasi(response.data.nama_aplikasi);
-                setDeskripsiAplikasi(response.data.deskripsi_aplikasi);
-            })
-            .catch((error) => {
-                console.error("Error fetching navbar config:", error);
-            });
-    }, []);
 
     return (
         <Guest>
@@ -74,76 +44,89 @@ function Landing({ content, categories, favorites: initialFavorites }) {
 
             <main className="w-full overflow-hidden py-24 lg:pt-24 lg:pb-0 px-5 lg:px-20">
                 {/* Form Pencarian */}
-                <div className="grid lg:grid-cols-4 lg:gap-10">
-                    <div className="lg:max-h-[83vh] lg:overflow-y-auto lg:px-2">
-                        <div className="hidden lg:block mb-5 bg-rose-100 rounded-md shadow p-5">
-                            <div className="flex items-center gap-1 mb-2">
-                                <div className="rounded-full w-3 h-3 bg-red-500"></div>
-                                <div className="rounded-full w-3 h-3 bg-yellow-500"></div>
-                                <div className="rounded-full w-3 h-3 bg-blue-500"></div>
-                            </div>
-                            <h1 className="text-3xl font-[Helvetica-bold] mb-3">{namaAplikasi || ""}</h1>
-                            <p className="text-sm font-[Helvetica-regular] tracking-wide">{deskripsiAplikasi || ""}</p>
-                        </div>
-                        <form
-                            onSubmit={(e) => e.preventDefault()} // Mencegah reload halaman
-                            className="relative"
-                        >
-                            <input
-                                type="text"
-                                className="rounded-xl mb-4 border-neutral-100 shadow w-full text-base tracking-wide font-[Helvetica-regular] placeholder:text-black/70 py-2.5"
-                                name="search"
-                                id="search"
-                                placeholder="Cari Doa.."
-                                value={searchQuery} // Bind state pencarian
-                                onChange={(e) => setSearchQuery(e.target.value)} // Update state saat input berubah
-                                autoComplete="off"
-                            />
-                            <BiSearch className="absolute top-2 right-3 w-6 h-6" />
-                        </form>
-
-                        {/* Daftar Kategori */}
-                        <div className="flex items-center gap-2 font-[Helvetica-regular] flex-wrap">
-                            <div
-                                onClick={() => setSelectedCategory("semua")}
-                                className={`px-3 py-2 shadow rounded-full tracking-wide flex items-center text-sm justify-center cursor-pointer ${
-                                    selectedCategory === "semua"
-                                        ? "text-white bg-orange-400"
-                                        : "text-black bg-neutral-50"
-                                }`}
-                            >
-                                Semua
-                            </div>
-                            {categories.map((category, i) => (
-                                <div
-                                    key={i}
-                                    onClick={() =>
-                                        setSelectedCategory(category.name)
-                                    }
-                                    className={`px-3 py-2 shadow rounded-full shrink-0 tracking-wide flex items-center text-sm justify-center cursor-pointer ${
-                                        selectedCategory === category.name
-                                            ? "text-white bg-orange-400"
-                                            : "text-black bg-neutral-50"
-                                    }`}
-                                >
-                                    {category.name}
-                                </div>
-                            ))}
+                <div className="">
+                    <div className="w-full relative lg:h-[70vh] bg-cover bg-center border rounded-md mb-4 bg-[url('https://images.unsplash.com/photo-1618554844984-d4ed47c7e0c0?q=80&w=869&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')]">
+                        <div className="absolute inset-0 bg-black/20 z-10"></div>
+                        <div className="relative z-20 lg:p-20 p-5">
+                            <h1 className="lg:text-7xl text-3xl mb-2 font-[Helvetica-Bold] text-white ">
+                                Tsaqalain
+                            </h1>
+                            <span className="block text-sm font-[Helvetica-Regular] text-white">
+                                Al-Qur&apos;an & Munajat Ahlulbait
+                            </span>
+                            <p className="block text-xs lg:text-base font-[Helvetica-Regular] text-white mt-20 lg:max-w-[50%] tracking-wide">
+                                Aplikasi ini menyajikan Al-Qur’an digital dan
+                                kumpulan doa-doa pilihan dari Ahlulbait, lengkap
+                                dengan munajat harian yang menyentuh hati.
+                                Dirancang untuk menemani ibadah dan mendekatkan
+                                diri kepada Allah melalui bacaan suci dan
+                                lantunan doa penuh makna, di mana saja dan kapan
+                                saja.
+                            </p>
                         </div>
                     </div>
-
                     {/* Konten Doa */}
-                    <div className="w-full lg:col-span-3 grid grid-cols-1 lg:grid-cols-2 gap-3 mt-5 lg:mt-0 py-2 lg:py-0 font-[Helvetica-regular] lg:max-h-[83vh] lg:overflow-y-auto lg:pr-2">
-                        {filteredContent.length > 0 ? (
-                            filteredContent.map((doa, i) => (
+                    <div className="mb-5 mt-10">
+                        <h1 className="text-xl font-[Helvetica-Regular] text-black">
+                            Al-Qur’an{" "}
+                            <span className="block text-xs">
+                                Pilih surah yang ingin ditampilkan
+                            </span>
+                        </h1>
+                    </div>
+
+                    <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-3 mt-5 lg:mt-0 py-2 lg:py-0 font-[Helvetica-regular] lg:max-h-[83vh] lg:overflow-y-auto lg:pr-2">
+                        {surahs.data.map((surah, i) => (
+                            <div key={surah.number} className="relative">
+                                <Link
+                                    href={route("quran.show", [surah.number])}
+                                    className="flex items-center gap-3 py-3 hover:bg-neutral-50 bg-white border rounded-md transition relative z-30"
+                                >
+                                    <div className="flex items-center gap-3 pl-3">
+                                        <div className="w-14 h-14 shrink-0 bg-black/70 rounded-full flex items-center justify-center border text-sm text-white">
+                                            {1 + i}
+                                        </div>
+                                        <div>
+                                            <h1 className="text-base font-[Helvetica-bold] tracking-wide text-black">
+                                                {surah.englishName} -{" "}
+                                                {surah.name}
+                                                <span className="block font-[Helvetica-light] text-xs truncate ..."></span>
+                                            </h1>
+                                        </div>
+                                    </div>
+                                </Link>
+                            </div>
+                        ))}
+                    </div>
+                    <div className="flex justify-center mb-5">
+                        <Link
+                            href={route('quran.index')}
+                            className="text-sm font-[Helvetica-Regular] text-white bg-black/70 px-4 py-2.5 rounded-md mt-5"
+                        >
+                            Lihat Semua
+                        </Link>
+                    </div>
+                    <hr />
+
+                    <div className="mb-5 mt-10">
+                        <h1 className="text-xl font-[Helvetica-Regular] text-black">
+                            Munajat Ahlulbait{" "}
+                            <span className="block text-xs">
+                                Kumpulan doa dan munajat ahlulbait
+                            </span>
+                        </h1>
+                    </div>
+                    <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-3 mt-5 lg:mt-0 py-2 lg:py-0 font-[Helvetica-regular] lg:max-h-[83vh] lg:overflow-y-auto lg:pr-2">
+                        {content.data.length > 0 ? (
+                            content.data.map((doa, i) => (
                                 <div key={i} className="relative">
                                     <Link
                                         href={route("doa.show", [doa.id])}
-                                        className="flex items-center gap-3 py-3 hover:bg-neutral-50 lg:bg-neutral-50 lg:rounded-md lg:hover:opacity-50 transition relative z-30"
+                                        className="flex items-center gap-3 py-3 hover:bg-neutral-50 bg-white border rounded-md transition relative z-30"
                                     >
-                                        <div className="flex items-center gap-3">
-                                            <div className="w-14 h-14 shrink-0 bg-neutral-50 flex items-center justify-center text-sm text-black">
-                                                {doa.title[0]}
+                                        <div className="flex items-center gap-3 pl-3">
+                                            <div className="w-14 h-14 shrink-0 bg-black/70 rounded-full flex items-center justify-center border text-sm text-white">
+                                                {1 + i}
                                             </div>
                                             <div>
                                                 <h1 className="text-base font-[Helvetica-bold] tracking-wide text-black">
@@ -175,6 +158,14 @@ function Landing({ content, categories, favorites: initialFavorites }) {
                                 ini.
                             </div>
                         )}
+                    </div>
+                    <div className="flex justify-center">
+                        <Link
+                            href={route('doa.index')}
+                            className="text-sm font-[Helvetica-Regular] text-white bg-black/70 px-4 py-2.5 rounded-md mt-5"
+                        >
+                            Lihat Semua
+                        </Link>
                     </div>
                 </div>
             </main>

@@ -50,8 +50,9 @@ function PreviewDoa({ doa, favorites }) {
                     );
                 } else if (index % 3 === 1) {
                     p.classList.add(
-                        "font-[Helvetica-medium]",
+                        "font-[Helvetica-Regular]",
                         "text-base",
+                        "italic",
                         "mb-3"
                     );
                 } else if (index % 3 === 2) {
@@ -97,7 +98,9 @@ function PreviewDoa({ doa, favorites }) {
                     </div>
 
                     <div>
-                        <p className="text-base tracking-wide text-justify text-black/75 font-[Helvetica-regular]">
+                        {doa.sejarah_doa && (
+                            <>
+                            <p className="text-base tracking-wide text-justify text-black/75 font-[Helvetica-regular]">
                             {
                                 showMore
                                     ? doa.sejarah_doa // Jika showMore true, tampilkan seluruh teks
@@ -105,7 +108,6 @@ function PreviewDoa({ doa, favorites }) {
                                       (doa.sejarah_doa.length > 70 ? "..." : "") // Jika false, tampilkan sebagian
                             }
                         </p>
-
                         {/* Tampilkan tombol jika panjang teks lebih dari 40 karakter */}
                         {doa.sejarah_doa.length > 70 && (
                             <button
@@ -117,6 +119,11 @@ function PreviewDoa({ doa, favorites }) {
                                     : "Tampilkan semua"}
                             </button>
                         )}
+                            </>
+                        )}
+                        
+
+                        
 
                         <p className="text-sm font-[Helvetica-regular] text-black/75 italic mt-2">
                             {doa.catatan_kaki}

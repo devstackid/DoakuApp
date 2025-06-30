@@ -5,6 +5,7 @@ import InputLabel from "@/Components/InputLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
 import { Head, Link, useForm } from "@inertiajs/react";
+import { FaGoogle } from "react-icons/fa";
 
 export default function Login({ status }) {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -32,7 +33,7 @@ export default function Login({ status }) {
             )}
 
             <div className="w-full h-screen overflow-hidden grid lg:grid-cols-3 grid-cols-1 p-0">
-                <div className="flex items-center h-screen justify-center z-30">
+                <div className="flex items-center h-screen justify-center z-40">
                     <form onSubmit={submit} className="w-[75%] md:w-[70%]">
                         <div className="mb-5">
                             <h1 className="text-3xl md:text-4xl font-[Helvetica-bold] text-center">
@@ -85,21 +86,6 @@ export default function Login({ status }) {
                             />
                         </div>
 
-                        <div className="block mt-4">
-                            <label className="flex items-center">
-                                <Checkbox
-                                    name="remember"
-                                    checked={data.remember}
-                                    onChange={(e) =>
-                                        setData("remember", e.target.checked)
-                                    }
-                                />
-                                <span className="ms-2 text-base text-gray-600">
-                                    Remember me
-                                </span>
-                            </label>
-                        </div>
-
                         <div className="mt-4">
                             {/* {canResetPassword && (
             <Link
@@ -114,8 +100,14 @@ export default function Login({ status }) {
                                 className="w-full font-[Helvetica-regular]"
                                 disabled={processing}
                             >
-                                Login
+                                Masuk
                             </PrimaryButton>
+                            <a
+                                href="/auth/redirect/google"
+                                className="bg-orange-400 text-white font-[Helvetica-Regular] px-4 py-2 mt-4 flex items-center justify-center gap-2 rounded"
+                            >
+                                <FaGoogle /> Lanjutkan dengan Google
+                            </a>
                             <div className="flex items-center justify-between mt-5">
                                 <p className="text-base font-[Helvetica-regular] text-black">
                                     Belum punya akun?
@@ -130,13 +122,16 @@ export default function Login({ status }) {
                         </div>
                     </form>
                 </div>
-                <div className="h-full lg:col-span-2 lg:flex hidden inset-0 lg:relative z-20">
+                <div className="h-full lg:col-span-2 lg:flex absolute inset-0 lg:relative z-20">
                     <img
-                        src={"assets/bglogin.jpg"}
+                        src={
+                            "https://images.unsplash.com/photo-1618554844984-d4ed47c7e0c0?q=80&w=869&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                        }
                         className="object-cover h-full"
                         alt=""
                     />
                 </div>
+                <div className="absolute inset-0 lg:hidden bg-white/75 backdrop-blur-sm z-30"></div>
             </div>
         </>
     );
