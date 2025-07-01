@@ -1,10 +1,8 @@
-import BottomNavbar from "@/Components/BottomNavbar";
 import NavBar from "@/Components/NavBar";
 import NavbarOffcanvas from "@/Components/NavbarOffcanvas";
 import { usePage } from "@inertiajs/react";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import Footer from "../Pages/Landing/Components/Footer";
 
 export default function Guest({ children }) {
     const { auth } = usePage().props;
@@ -66,7 +64,6 @@ export default function Guest({ children }) {
             />
             {children}
 
-            <Footer />
         </>
     );
 }

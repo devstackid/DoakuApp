@@ -1,10 +1,10 @@
 /* eslint-disable no-undef */
-import Checkbox from "@/Components/Checkbox";
 import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
-import { Head, Link, useForm } from "@inertiajs/react";
+import Guest from "@/Layouts/GuestLayout";
+import { Head, useForm } from "@inertiajs/react";
 import { FaGoogle } from "react-icons/fa";
 
 export default function Login({ status }) {
@@ -23,7 +23,7 @@ export default function Login({ status }) {
     };
 
     return (
-        <>
+        <Guest>
             <Head title="Log in" />
 
             {status && (
@@ -32,12 +32,12 @@ export default function Login({ status }) {
                 </div>
             )}
 
-            <div className="w-full h-screen overflow-hidden grid lg:grid-cols-3 grid-cols-1 p-0">
+            <div className="w-full h-screen overflow-hidden p-0">
                 <div className="flex items-center h-screen justify-center z-40">
-                    <form onSubmit={submit} className="w-[75%] md:w-[70%]">
+                    <form onSubmit={submit} className="w-full px-5 lg:w-[40%]">
                         <div className="mb-5">
                             <h1 className="text-3xl md:text-4xl font-[Helvetica-bold] text-center">
-                                Login
+                                Masuk
                             </h1>
                             <p className="text-base tracking-wide font-[Helvetica-regular] text-black text-center">
                                 Harap masuk untuk melanjutkan.
@@ -66,7 +66,7 @@ export default function Login({ status }) {
                         </div>
 
                         <div className="mt-4">
-                            <InputLabel htmlFor="password" value="Password" />
+                            <InputLabel htmlFor="password" value="Kata Sandi" />
 
                             <TextInput
                                 id="password"
@@ -87,52 +87,42 @@ export default function Login({ status }) {
                         </div>
 
                         <div className="mt-4">
-                            {/* {canResetPassword && (
-            <Link
-                href={route('password.request')}
-                className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-                Forgot your password?
-            </Link>
-        )} */}
-
-                            <PrimaryButton
-                                className="w-full font-[Helvetica-regular]"
+                            <button
+                                className="w-full font-[Helvetica-Bold] mb-3 block bg-blue-600 text-white text-center border border-blue-700 rounded-md py-2  hover:bg-white hover:text-blue-700 transition"
                                 disabled={processing}
                             >
                                 Masuk
-                            </PrimaryButton>
+                            </button>
+                            <div className="flex items-center gap-2">
+                                <hr className="w-full" />
+                                <span className="text-xs font-[Helvetica-Regular] text-black/50">
+                                    atau
+                                </span>
+                                <hr className="w-full" />
+                            </div>
                             <a
                                 href="/auth/redirect/google"
-                                className="bg-orange-400 text-white font-[Helvetica-Regular] px-4 py-2 mt-4 flex items-center justify-center gap-2 rounded"
+                                className="bg-orange-400 hover:bg-white border border-orange-500 hover:text-orange-600 transition text-white font-[Helvetica-Regular] px-4 py-2 mt-4 flex items-center justify-center gap-2 rounded"
                             >
                                 <FaGoogle /> Lanjutkan dengan Google
                             </a>
-                            <div className="flex items-center justify-between mt-5">
-                                <p className="text-base font-[Helvetica-regular] text-black">
-                                    Belum punya akun?
-                                </p>
-                                <Link
-                                    href={route("register")}
-                                    className="text-base font-[Helvetica-bold] text-blue-700 underline pb-1"
-                                >
-                                    Daftar
-                                </Link>
-                            </div>
                         </div>
                     </form>
                 </div>
-                <div className="h-full lg:col-span-2 lg:flex absolute inset-0 lg:relative z-20">
+            </div>
+
+            <div className="left-0 right-0 bottom-0 fixed z-20 border-t py-2 flex items-center justify-center gap-2">
+                <div className="w-10 h-10 flex items-center justify-center rounded-full">
                     <img
-                        src={
-                            "https://images.unsplash.com/photo-1618554844984-d4ed47c7e0c0?q=80&w=869&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                        }
-                        className="object-cover h-full"
+                        src="/assets/logo.png"
+                        className="w-full h-full object-cover"
                         alt=""
                     />
                 </div>
-                <div className="absolute inset-0 lg:hidden bg-white/75 backdrop-blur-sm z-30"></div>
+                <div className="text-sm font-[Helvetica-Regular] text-black/70 tracking-wide">
+                   @2025, Tsaqalain
+                </div>
             </div>
-        </>
+        </Guest>
     );
 }

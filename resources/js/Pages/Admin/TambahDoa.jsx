@@ -28,11 +28,11 @@ const TambahDoa = ({ auth, categories }) => {
     return (
         <AuthenticatedLayout user={auth.user}>
             <Head title="Tambah Doa" />
-            <div className="font-poppins py-5 px-8">
+            <div className=" py-5 px-8">
                 <div className="md:flex items-start justify-between mb-3">
-                    <h1 className="text-sm font-bold mb-3 md:mb-0 text-black">
+                    <h1 className="text-sm font-[Helvetica-Bold] tracking-wide mb-3 md:mb-0 text-black">
                         Tambah Doa{" "}
-                        <span className="block text-slate-700 font-normal text-xs">
+                        <span className="block text-slate-700 font-[Helvetica-Regular] text-xs">
                             Isi data untuk menambahkan doa
                         </span>
                     </h1>
@@ -54,7 +54,7 @@ const TambahDoa = ({ auth, categories }) => {
                                     name="title"
                                     value={data.title}
                                     onChange={handleChange}
-                                    className="w-full border border-gray-300 rounded-md bg-neutral-50 text-sm font-normal text-black"
+                                    className="w-full border border-gray-300 rounded-md bg-neutral-50 text-sm font-[Helvetica-Regular] text-black"
                                     placeholder="Nama Doa / Judul.."
                                 />
                                 {errors.title && (
@@ -72,25 +72,31 @@ const TambahDoa = ({ auth, categories }) => {
                             </label>
                             <div className="relative">
                                 <Editor
-                                    apiKey="elrci2bfp14b5ajwl6fufpgyqoas0mpcvj2tpooqb3kdoigr"
+                                    apiKey="lvz92aabap2iuitv445we7ve1xnk24zmy4svudfhuq4c7lkg"
                                     value={data.content}
                                     init={{
-                                        height: 300,
+                                        height: 500,
                                         menubar: true,
-                                        selector: "textarea",
                                         plugins: [
-                                            "advlist autolink lists link image charmap print preview anchor",
-                                            "searchreplace visualblocks code fullscreen", // Plugin fullscreen
-                                            "insertdatetime media table paste code help wordcount",
+                                            
+                                            "charmap",
+                                            "codesample",
+                                            "emoticons",
+                                            "wordcount",
+                                            "preview",
+                                            "fullscreen",
+                                            "paste",
+                                            "code",
                                         ],
                                         toolbar:
-                                            "undo redo | formatselect | bold italic backcolor | \
-                                            alignleft aligncenter alignright alignjustify | \
-                                            bullist numlist outdent indent | removeformat | fullscreen | help",
-                                        fullscreen_native: true,
+                                            "undo redo | preview fullscreen | " +
+                                            "bold italic underline | " +
+                                            "align lineheight " +
+                                            "emoticons charmap | removeformat",
                                     }}
                                     onEditorChange={handleEditorChange}
                                 />
+
                                 {errors.content && (
                                     <div className="text-xs font-medium text-red-500">
                                         {errors.content}
@@ -109,7 +115,7 @@ const TambahDoa = ({ auth, categories }) => {
                                 name="category_id"
                                 value={data.category_id}
                                 onChange={handleChange}
-                                className="w-full border border-gray-300 rounded-md bg-neutral-50 text-sm font-normal text-black"
+                                className="w-full border border-gray-300 rounded-md bg-neutral-50 text-sm font-[Helvetica-Regular] text-black"
                             >
                                 <option value="" disabled>
                                     Pilih Kategori Doa
@@ -134,13 +140,18 @@ const TambahDoa = ({ auth, categories }) => {
                             htmlFor="sejarah_doa"
                             className="block text-sm font-medium text-gray-900 mt-5 mb-3"
                         >
-                            Sejarah, Deskripsi / Keutamaan
+                            Sejarah, Deskripsi / Keutamaan (Opsional)
                         </label>
                         <div className="relative mb-3">
-                            <textarea rows={4} name="sejarah_doa" id="sejarah_doa" value={data.sejarah_doa} onChange={handleChange} className="w-full border border-gray-300 rounded-md bg-neutral-50 text-sm font-normal text-black">
+                            <textarea
+                                rows={4}
+                                name="sejarah_doa"
+                                id="sejarah_doa"
+                                value={data.sejarah_doa}
+                                onChange={handleChange}
+                                className="w-full border border-gray-300 rounded-md bg-neutral-50 text-sm font-[Helvetica-Regular] text-black"
+                            ></textarea>
 
-                            </textarea>
-                            
                             {errors.sejarah_doa && (
                                 <div className="text-xs font-medium text-red-500">
                                     {errors.sejarah_doa}
@@ -149,27 +160,27 @@ const TambahDoa = ({ auth, categories }) => {
                         </div>
 
                         <label
-                                htmlFor="catatan_kaki"
-                                className="block text-sm font-medium text-gray-900 mb-3"
-                            >
-                                Sumber / Catatan Kaki
-                            </label>
-                            <div className="relative mb-3">
-                                <input
-                                    type="text"
-                                    id="catatan_kaki"
-                                    name="catatan_kaki"
-                                    value={data.catatan_kaki}
-                                    onChange={handleChange}
-                                    className="w-full border border-gray-300 rounded-md bg-neutral-50 text-sm font-normal text-black"
-                                    placeholder="Sumber sejarah / catatan kaki"
-                                />
-                                {errors.catatan_kaki && (
-                                    <div className="text-xs font-medium text-red-500">
-                                        {errors.catatan_kaki}
-                                    </div>
-                                )}
-                            </div>
+                            htmlFor="catatan_kaki"
+                            className="block text-sm font-medium text-gray-900 mb-3"
+                        >
+                            Sumber / Catatan Kaki (Opsional)
+                        </label>
+                        <div className="relative mb-3">
+                            <input
+                                type="text"
+                                id="catatan_kaki"
+                                name="catatan_kaki"
+                                value={data.catatan_kaki}
+                                onChange={handleChange}
+                                className="w-full border border-gray-300 rounded-md bg-neutral-50 text-sm font-[Helvetica-Regular] text-black"
+                                placeholder="Sumber sejarah / catatan kaki"
+                            />
+                            {errors.catatan_kaki && (
+                                <div className="text-xs font-medium text-red-500">
+                                    {errors.catatan_kaki}
+                                </div>
+                            )}
+                        </div>
 
                         <button
                             type="submit"

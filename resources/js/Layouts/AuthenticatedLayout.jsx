@@ -11,7 +11,7 @@ import {
     BiNotification,
     BiPieChart,
 } from "react-icons/bi";
-import { FaMagic, FaToolbox, FaUserFriends } from "react-icons/fa";
+import { FaMagic } from "react-icons/fa";
 import { FaUsers } from "react-icons/fa6";
 import { GiBank } from "react-icons/gi";
 
@@ -22,19 +22,19 @@ export default function Authenticated({ user, children }) {
             <div className="fixed top-0 w-full flex justify-between z-50 h-16 px-4 md:px-10 border-b border-neutral-50 bg-white">
                 <div className="flex items-center gap-3">
                     <div className="shrink-0 flex items-center">
-                        <Link href="/">
+                        <Link href={route('admin.dashboard')}>
                             <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800" />
                         </Link>
                     </div>
 
-                    <span className="text-black font-poppins font-semibold text-base">
-                        Shafinah
+                    <span className="text-black font-[Helvetica-Bold] text-base">
+                        Tsaqalain
                     </span>
 
                     <div className="ml-24 hidden md:flex flex-col">
-                        <h1 className="text-xl font-bold text-black font-poppins">
-                            Hai, {user.name}{" "}
-                            <small className="block text-xs font-normal text-black/75">
+                        <h1 className="text-xl font-[Helvetica-Bold] text-black">
+                            {user.name}{" "}
+                            <small className="block text-xs font-[Helvetica-Regular] text-black/75">
                                 Selamat datang di halaman dashboard
                             </small>
                         </h1>
@@ -50,9 +50,9 @@ export default function Authenticated({ user, children }) {
                                         type="button"
                                         className="inline-flex items-center px-3 py-2 border border-transparent text-sm rounded-md focus:outline-none transition ease-in-out duration-150"
                                     >
-                                        <div className="w-10 h-10 rounded-full font-medium text-black font-poppins relative leading-10 capitalize ring-2 ring-teal-200">
+                                        <div className="w-10 h-10 rounded-full text-black font-[Helvetica-Medium] relative leading-10 capitalize ring-2 ring-blue-600">
                                             {user.name[0]}
-                                            <div className="absolute top-0 right-0 ring-2 ring-teal-100 w-2 h-2 bg-teal-200 rounded-full"></div>
+                                            <div className="absolute top-0 right-0 ring-2 ring-blue-600 w-2 h-2 bg-blue-500 rounded-full"></div>
                                         </div>
 
                                         <svg
@@ -128,7 +128,7 @@ export default function Authenticated({ user, children }) {
                                 <span>Doa</span>
                             </div>
                         </NavLink>
-                        <NavLink
+                        {/* <NavLink
                             href={route("admin.event.dashboard")}
                             active={route().current("admin.event.dashboard")}
                         >
@@ -136,22 +136,15 @@ export default function Authenticated({ user, children }) {
                                 <BiCalendar className="text-xl opacity-75" />{" "}
                                 <span>Acara</span>
                             </div>
-                        </NavLink>
-                        <NavLink
-                            href={route("admin.configs.dashboard")}
-                            active={route().current("admin.configs.dashboard")}
-                        >
-                            <div className="flex items-center gap-4">
-                                <FaToolbox className="text-xl opacity-75" />{" "}
-                                <span>Config</span>
-                            </div>
-                        </NavLink>
+                        </NavLink> */}
                     </div>
 
                     {/* bawah */}
                     <div className="flex flex-col gap-3">
                         <NavLink
                             href={route("logout")}
+                            method="post"
+                                    as="button"
                             // active={route().current("user.dashboard")}
                         >
                             <div className="flex items-center gap-4">
@@ -167,7 +160,7 @@ export default function Authenticated({ user, children }) {
             </div>
 
             {/* Mobile Navigation View */}
-            <nav className="md:hidden fixed bottom-0 w-full z-50 grid grid-cols-5 gap-1 pb-3 pt-2 border-t px-2 bg-white border-neutral-100">
+            <nav className="md:hidden fixed bottom-0 w-full z-50 grid grid-cols-4 gap-1 pb-3 pt-2 border-t px-2 bg-white border-neutral-100">
                 <NavLink
                     href={
                         user.role == "other"
@@ -263,32 +256,7 @@ export default function Authenticated({ user, children }) {
                         )}
                     </div>
                 </NavLink>
-                <NavLink
-                    href={
-                        user.role == "other"
-                            ? route("user.guest.dashboard")
-                            : route("admin.configs.dashboard")
-                    }
-                    active={
-                        user.role == "other"
-                            ? route().current("user.guest.dashboard")
-                            : route().current("admin.configs.dashboard")
-                    }
-                >
-                    <div className="flex flex-col items-center gap-1">
-                        {user.role == "other" ? (
-                            <>
-                                <FaUserFriends className="text-xl opacity-75" />{" "}
-                                <small>Guest</small>
-                            </>
-                        ) : (
-                            <>
-                                <FaToolbox className="text-xl opacity-75" />{" "}
-                                <small>Config</small>
-                            </>
-                        )}
-                    </div>
-                </NavLink>
+                
             </nav>
         </div>
     );

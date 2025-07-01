@@ -10,10 +10,8 @@ const Users = ({ auth, users }) => {
     const [modalUserId, setModalUserId] = useState(null);
     const [values, setValues] = useState({
         name: "",
-        username: "",
         email: "",
         password: "",
-        phone: "",
         role: "",
     });
 
@@ -23,10 +21,8 @@ const Users = ({ auth, users }) => {
             if (selectedUser) {
                 setValues({
                     name: selectedUser.name || "",
-                    username: selectedUser.username || "",
                     email: selectedUser.email || "",
                     password: "",
-                    phone: selectedUser.phone || "",
                     role: selectedUser.role || "",
                 });
             }
@@ -39,12 +35,8 @@ const Users = ({ auth, users }) => {
     const resetForm = () => {
         setValues({
             name: "",
-            username: "",
             email: "",
             password: "",
-            phone: "",
-            
-            
             role: "",
         });
     };
@@ -71,7 +63,7 @@ const Users = ({ auth, users }) => {
                 resetForm(); 
             },
             onError: (errors) => {
-                console.log("Errors:", errors); 
+                // console.log("Errors:", errors); 
             }
         });
     };
@@ -95,11 +87,6 @@ const Users = ({ auth, users }) => {
             users.filter(
                 (user) =>
                     user.name.toLowerCase().includes(search.toLowerCase()) ||
-                    user.phone.toLowerCase().includes(search.toLowerCase()) ||
-                    user.username
-                        .toLowerCase()
-                        .includes(search.toLowerCase()) ||
-                    
                     user.email.toLowerCase().includes(search.toLowerCase())
             )
         );
@@ -117,11 +104,11 @@ const Users = ({ auth, users }) => {
     return (
         <AuthenticatedLayout user={auth.user}>
             <Head title="Users" />
-            <div className="font-poppins py-5 px-8">
+            <div className="py-5 px-5">
                 <div className="md:flex items-start justify-between mb-3">
-                    <h1 className="text-sm font-bold mb-3 md:mb-0 text-black">
+                    <h1 className="text-sm font-[Helvetica-Bold] mb-3 md:mb-0 text-black">
                         Data Akun{" "}
-                        <span className="block text-slate-700 font-normal text-xs">
+                        <span className="block text-slate-700 font-[Helvetica-Regular] text-xs">
                             Anda dapat mengelola data akun pengguna
                         </span>
                     </h1>
@@ -141,15 +128,15 @@ const Users = ({ auth, users }) => {
                         )}
                         <button
                             onClick={() => setModalUserId("addUser")}
-                            className="text-xs font-bold text-white px-3 py-2 rounded bg-sky-500"
+                            className="text-xs font-[Helvetica-Bold] text-white px-3 py-2 rounded bg-sky-500"
                         >
                             Buat Akun
                         </button>
                     </div>
                 </div>
                 <div className="relative overflow-x-auto mt-3 shadow-md sm:rounded-lg w-full">
-                    <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <table className="w-full text-sm text-left text-gray-500 ">
+                        <thead className="text-xs text-gray-700 uppercase bg-gray-50 ">
                             <tr>
                                 <th scope="col" className="px-6 py-3">
                                     #
@@ -170,17 +157,17 @@ const Users = ({ auth, users }) => {
                             {memoizedFilteredData.map((user, i) => (
                                 <tr
                                     key={i}
-                                    className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+                                    className="bg-white border-b "
                                 >
                                     <td className="px-6 py-4">{i + 1}</td>
-                                    <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    <td className="px-6 py-4 font-[Helvetica-Regular] tracking-wide text-gray-900 whitespace-nowrap ">
                                         {user.name}
                                     </td>
                                     <td className="px-6 py-4">{user.email}</td>
                                     
                                     <td className="px-6 py-4 flex items-center gap-2">
                                         <button
-                                            className="font-medium w-10 h-10 rounded-full bg-neutral-100 flex items-center justify-center text-blue-600 dark:text-blue-500 hover:underline"
+                                            className="font-[Helvetica-Regular] tracking-wide w-10 h-10 rounded-full bg-neutral-100 flex items-center justify-center text-blue-600  hover:underline"
                                             onClick={() =>
                                                 setModalUserId(user.id)
                                             }
@@ -188,7 +175,7 @@ const Users = ({ auth, users }) => {
                                             <BiPencil />
                                         </button>
                                         <button
-                                            className="font-medium w-10 h-10 rounded-full bg-neutral-100 flex items-center justify-center text-red-600 dark:text-red-500 hover:underline"
+                                            className="font-[Helvetica-Regular] tracking-wide w-10 h-10 rounded-full bg-neutral-100 flex items-center justify-center text-red-600  hover:underline"
                                             onClick={() =>
                                                 handleDelete(user.id)
                                             }
@@ -211,10 +198,10 @@ const Users = ({ auth, users }) => {
                         <div className="relative w-full max-w-md max-h-[70vh] bg-white rounded overflow-y-auto">
                             <form
                                 onSubmit={handleSubmit}
-                                className="relative bg-white rounded-lg shadow dark:bg-gray-700"
+                                className="relative bg-white rounded-lg shadow "
                             >
                                 <div className="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
-                                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+                                    <h3 className="text-xl font-semibold text-gray-900 ">
                                         {modalUserId === "addUser"
                                             ? "Tambah"
                                             : "Ubah"}{" "}
@@ -248,7 +235,7 @@ const Users = ({ auth, users }) => {
                                 <div className="p-6 space-y-3">
                                     <label
                                         htmlFor="name"
-                                        className="block text-sm font-medium text-gray-900 dark:text-white"
+                                        className="block text-sm font-[Helvetica-Regular] tracking-wide text-gray-900 "
                                     >
                                         Nama
                                     </label>
@@ -259,65 +246,23 @@ const Users = ({ auth, users }) => {
                                             name="name"
                                             value={values.name}
                                             onChange={handleChange}
-                                            className="w-full border border-gray-300 rounded-md bg-neutral-50 text-sm font-normal text-black"
+                                            className="w-full border border-gray-300 rounded-md bg-neutral-50 text-sm font-[Helvetica-Regular] text-black"
                                             placeholder="Nama user.."
                                         />
                                         {errors.name && (
-                                            <div className="text-xs font-medium text-red-500">
+                                            <div className="text-xs font-[Helvetica-Regular] tracking-wide text-red-500">
                                                 {errors.name}
                                             </div>
                                         )}
                                     </div>
 
-                                    <label
-                                        htmlFor="username"
-                                        className="block text-sm font-medium text-gray-900 dark:text-white"
-                                    >
-                                        Username
-                                    </label>
-                                    <div className="relative">
-                                        <input
-                                            type="text"
-                                            id="username"
-                                            name="username"
-                                            value={values.username}
-                                            onChange={handleChange}
-                                            placeholder="Username.."
-                                            className="w-full border border-gray-300 rounded-md bg-neutral-50 text-sm font-normal text-black"
-                                        />
-                                        {errors.username && (
-                                            <div className="text-xs font-medium text-red-500">
-                                                {errors.username}
-                                            </div>
-                                        )}
-                                    </div>
+                                    
 
-                                    <label
-                                        htmlFor="phone"
-                                        className="block text-sm font-medium text-gray-900 dark:text-white"
-                                    >
-                                        Nomor Telepon
-                                    </label>
-                                    <div className="relative">
-                                        <input
-                                            type="text"
-                                            id="phone"
-                                            name="phone"
-                                            value={values.phone}
-                                            onChange={handleChange}
-                                            placeholder="Phone.."
-                                            className="w-full border border-gray-300 rounded-md bg-neutral-50 text-sm font-normal text-black"
-                                        />
-                                        {errors.phone && (
-                                            <div className="text-xs font-medium text-red-500">
-                                                {errors.phone}
-                                            </div>
-                                        )}
-                                    </div>
+                                    
 
                                     <label
                                         htmlFor="email"
-                                        className="block text-sm font-medium text-gray-900 dark:text-white"
+                                        className="block text-sm font-[Helvetica-Regular] tracking-wide text-gray-900 "
                                     >
                                         Email
                                     </label>
@@ -329,10 +274,10 @@ const Users = ({ auth, users }) => {
                                             value={values.email}
                                             onChange={handleChange}
                                             placeholder="Email.."
-                                            className="w-full border border-gray-300 rounded-md bg-neutral-50 text-sm font-normal text-black"
+                                            className="w-full border border-gray-300 rounded-md bg-neutral-50 text-sm font-[Helvetica-Regular] text-black"
                                         />
                                         {errors.email && (
-                                            <div className="text-xs font-medium text-red-500">
+                                            <div className="text-xs font-[Helvetica-Regular] tracking-wide text-red-500">
                                                 {errors.email}
                                             </div>
                                         )}
@@ -340,7 +285,7 @@ const Users = ({ auth, users }) => {
 
                                     <label
                                         htmlFor="password"
-                                        className="block text-sm font-medium text-gray-900 dark:text-white"
+                                        className="block text-sm font-[Helvetica-Regular] tracking-wide text-gray-900 "
                                     >
                                         Password
                                     </label>
@@ -352,10 +297,10 @@ const Users = ({ auth, users }) => {
                                             value={values.password}
                                             onChange={handleChange}
                                             placeholder="Password.."
-                                            className="w-full border border-gray-300 rounded-md bg-neutral-50 text-sm font-normal text-black"
+                                            className="w-full border border-gray-300 rounded-md bg-neutral-50 text-sm font-[Helvetica-Regular] text-black"
                                         />
                                         {errors.password && (
-                                            <div className="text-xs font-medium text-red-500">
+                                            <div className="text-xs font-[Helvetica-Regular] tracking-wide text-red-500">
                                                 {errors.password}
                                             </div>
                                         )}
@@ -365,7 +310,7 @@ const Users = ({ auth, users }) => {
 
                                     <label
                                         htmlFor="role"
-                                        className="block text-sm font-medium text-gray-900 dark:text-white"
+                                        className="block text-sm font-[Helvetica-Regular] tracking-wide text-gray-900 "
                                     >
                                         Role
                                     </label>
@@ -374,7 +319,7 @@ const Users = ({ auth, users }) => {
                                         name="role"
                                         value={values.role}
                                         onChange={handleChange}
-                                        className="w-full border border-gray-300 rounded-md bg-neutral-50 text-sm font-normal text-black"
+                                        className="w-full border border-gray-300 rounded-md bg-neutral-50 text-sm font-[Helvetica-Regular] text-black"
                                     >
                                         <option value="" disabled>
                                             Pilih Role
@@ -386,7 +331,7 @@ const Users = ({ auth, users }) => {
                                     </select>
 
                                     {errors.role && (
-                                        <div className="text-xs font-medium text-red-500">
+                                        <div className="text-xs font-[Helvetica-Regular] tracking-wide text-red-500">
                                             {errors.role}
                                         </div>
                                     )}
@@ -394,7 +339,7 @@ const Users = ({ auth, users }) => {
                                 <div className="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
                                     <button
                                         type="submit"
-                                        className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                                        className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-[Helvetica-Regular] tracking-wide rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                                     >
                                         {modalUserId === "addUser"
                                             ? "Tambah"
@@ -402,7 +347,7 @@ const Users = ({ auth, users }) => {
                                     </button>
                                     <button
                                         type="button"
-                                        className="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600"
+                                        className="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-[Helvetica-Regular] tracking-wide px-5 py-2.5 hover:text-gray-900 focus:z-10  dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600"
                                         onClick={() => setModalUserId(null)}
                                     >
                                         Batal

@@ -45,11 +45,11 @@ const Doa = ({ auth, contents }) => {
     return (
         <AuthenticatedLayout user={auth.user}>
             <Head title="Contents" />
-            <div className="font-poppins py-5 px-8">
+            <div className=" py-5 px-8">
                 <div className="md:flex items-start justify-between mb-3">
-                    <h1 className="text-sm font-bold mb-3 md:mb-0 text-black">
+                    <h1 className="text-sm font-[Helvetica-Bold] tracking-wide mb-3 md:mb-0 text-black">
                         Data Doa{" "}
-                        <span className="block text-slate-700 font-normal text-xs">
+                        <span className="block text-slate-700 font-[Helvetica-Regular] text-xs">
                             Anda dapat mengelola data doa di halaman ini
                         </span>
                     </h1>
@@ -68,15 +68,15 @@ const Doa = ({ auth, contents }) => {
                             </div>
                         )}
                         <Link href={route('doa.tambah')}
-                            className="text-xs font-bold text-white px-3 py-2 rounded bg-sky-500"
+                            className="text-xs font-[Helvetica-Bold] tracking-wide text-white px-3 py-2 rounded bg-sky-500"
                         >
                             Tambahkan Doa
                         </Link>
                     </div>
                 </div>
                 <div className="relative overflow-x-auto mt-3 shadow-md sm:rounded-lg w-full">
-                    <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <table className="w-full text-sm text-left text-gray-500 ">
+                        <thead className="text-xs text-gray-700 uppercase bg-gray-50  ">
                             <tr>
                                 <th scope="col" className="px-6 py-3">
                                     #
@@ -97,24 +97,24 @@ const Doa = ({ auth, contents }) => {
                             {memoizedFilteredData.map((content, i) => (
                                 <tr
                                     key={i}
-                                    className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+                                    className="bg-white border-b "
                                 >
                                     <td className="px-6 py-4">{i + 1}</td>
-                                    <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
                                         {content.title}
                                     </td>
-                                    <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
                                         {content.category.name}
                                     </td>
                                     <td className="px-6 py-4 flex items-center gap-2">
                                         <Link href={route('doa.ubah', [content.id])}
-                                            className="font-medium w-10 h-10 rounded-full bg-neutral-100 flex items-center justify-center text-blue-600 dark:text-blue-500 hover:underline"
+                                            className="font-medium w-10 h-10 rounded-full bg-neutral-100 flex items-center justify-center text-blue-600  hover:underline"
                                             
                                         >
                                             <BiPencil />
                                         </Link>
                                         <button
-                                            className="font-medium w-10 h-10 rounded-full bg-neutral-100 flex items-center justify-center text-red-600 dark:text-red-500 hover:underline"
+                                            className="font-medium w-10 h-10 rounded-full bg-neutral-100 flex items-center justify-center text-red-600  hover:underline"
                                             onClick={() =>
                                                 handleDelete(content.id)
                                             }

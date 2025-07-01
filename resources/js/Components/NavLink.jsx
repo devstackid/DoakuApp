@@ -6,9 +6,9 @@ export default function NavLink({ active = false, children, ...props }) {
         <Link
             {...props}
             className={clsx(
-                'text-xs md:text-sm font-Poppins transition duration-150 py-2 px-3 rounded ease-in-out focus:outline-none hover:text-teal-300 md:hover:text-black md:hover:bg-teal-300 md:min-w-[200px]', active
-                ? 'text-teal-400 md:text-black font-bold'
-                : 'text-black/70 font-normal'
+                'text-sm md:text-sm font-[Helvetica-Bold] tracking-wide transition duration-150 py-2 px-3 rounded ease-in-out focus:outline-none hover:text-blue-600  md:hover:bg-blue-600 md:hover:text-white md:min-w-[200px]', active
+                ? 'text-blue-700 md:text-black font-[Helvetica-Bold]'
+                : 'text-black/70 font-[Helvetica-Regular]'
             )
             }
         >

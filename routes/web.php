@@ -3,7 +3,6 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\OAuthController;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\ConfigController;
 use App\Http\Controllers\DoaController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\LandingController;
@@ -11,13 +10,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\AdminMiddleware;
-use App\Models\Category;
-use App\Models\Config;
 use App\Models\ContentDoa;
-use App\Models\Favorite;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 Route::get('/', [LandingController::class, 'index'])->name('home');
 
@@ -26,14 +20,6 @@ Route::get('/doa/{id}', [LandingController::class, 'tampilDoa'])->name('doa.show
 Route::get('/kalender', [LandingController::class, 'kalenderIndex'])->name('kalender.index');
 Route::get('/quran', [LandingController::class, 'quranIndex'])->name('quran.index');
 
-
-Route::get('/navbar-config', function () {
-    $config = Config::first();
-    return response()->json([
-        'nama_aplikasi' => $config->nama_aplikasi,
-        'deskripsi_aplikasi' => $config->deskripsi_aplikasi, // Menambahkan deskripsi_aplikasi
-    ]);
-});
 
 Route::get('/api/content', function () {
     $content = ContentDoa::all();
@@ -47,9 +33,6 @@ Route::get('/auth/callback/{provider}', [OAuthController::class, 'callback']);
 Route::get('/quran/{number}', [LandingController::class, 'show'])->name('quran.show');
 
 
-
-
-
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::middleware([AdminMiddleware::class])->group(function () {
         Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
@@ -58,8 +41,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/dashboard/kategori', [CategoryController::class, 'index'])->name('admin.kategori.dashboard');
         Route::get('/dashboard/doa', [DoaController::class, 'index'])->name('admin.doa.dashboard');
 
-        Route::get('/dashboard/config', [ConfigController::class, 'index'])->name('admin.configs.dashboard');
-        Route::put('/dashboard/config/update/{id}', [ConfigController::class, 'update'])->name('config.update');
+        // Route::get('/dashboard/config', [ConfigController::class, 'index'])->name('admin.configs.dashboard');
+        // Route::put('/dashboard/config/update/{id}', [ConfigController::class, 'update'])->name('config.update');
 
 
         Route::post('/dashboard/user/add', [UserController::class, 'store'])->name('user.add');
@@ -91,7 +74,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/koleksi/{id}', [LandingController::class, 'koleksiIndex'])->name('koleksi');
+    Route::get('/koleksi', [LandingController::class, 'koleksiIndex'])->name('koleksi');
 
     Route::post('/favorite/add/{id}', [LandingController::class, 'add'])->name('favorite.add');
     Route::post('/favorite/remove/{id}', [LandingController::class, 'remove'])->name('favorite.remove');

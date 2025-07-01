@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\ContentDoa;
 use App\Models\Event;
 use App\Models\Favorite;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -17,36 +18,34 @@ use Illuminate\Support\Facades\Route;
 
 class LandingController extends Controller
 {
+    
     public function index()
     {
+       
         $user = Auth::user();
+        $favorites = $user
+            ? Favorite::where('user_id', $user->id)->pluck('doa_id')->toArray()
+            : [];
 
-        $favorites = [];
-        if ($user) {
-            $favorites = Favorite::where('user_id', $user->id)->pluck('doa_id')->toArray();
-        }
+        // Ambil data surah dari API AlQuran
         $response = Http::get('https://api.alquran.cloud/v1/surah');
         $allSurahs = collect($response->json()['data'] ?? []);
 
+        // Paginasi manual
         $currentPage = request()->get('page', 1);
         $perPage = 5;
-
         $pagedSurahs = $allSurahs->forPage($currentPage, $perPage);
-
-        // Buat paginator manual
         $surahs = new LengthAwarePaginator(
             $pagedSurahs,
             $allSurahs->count(),
             $perPage,
             $currentPage,
-            ['path' => url()->current()] // Atau request()->url()
+            ['path' => url()->current()]
         );
+
         return Inertia::render('Landing/Landing', [
-            'canLogin' => Route::has('login'),
             'surahs' => $surahs,
-            'canRegister' => Route::has('register'),
             'content' => ContentDoa::with('category')->paginate(5),
-            'categories' => Category::all(),
             'favorites' => $favorites,
         ]);
     }
@@ -59,7 +58,7 @@ class LandingController extends Controller
         if ($user) {
             $favorites = Favorite::where('user_id', $user->id)->pluck('doa_id')->toArray();
         }
-       
+
         return Inertia::render('Landing/Doa', [
             'content' => ContentDoa::with('category')->get(),
             'categories' => Category::all(),
@@ -69,7 +68,7 @@ class LandingController extends Controller
 
     public function quranIndex()
     {
-              
+
         $response = Http::get('https://api.alquran.cloud/v1/surah');
         $data = $response->json();
         return Inertia::render('Landing/Quran', [
@@ -110,8 +109,6 @@ class LandingController extends Controller
         ]);
     }
 
-
-
     public function tampilDoa($id)
     {
         $user = Auth::user();
@@ -123,6 +120,7 @@ class LandingController extends Controller
 
         return Inertia::render('Landing/PreviewDoa', [
             'doa' => $doa,
+            'categories' => Category::all(),
             'favorites' => $favorites,
         ]);
     }
@@ -146,13 +144,12 @@ class LandingController extends Controller
     }
 
 
-    public function koleksiIndex($id)
+    public function koleksiIndex()
     {
         $user = Auth::user();
         $favorites = [];
 
         if ($user) {
-            // Mengambil data favorite dengan relasi doa dan user
             $favorites = Favorite::with('doa.category', 'user')
                 ->where('user_id', $user->id)
                 ->get();

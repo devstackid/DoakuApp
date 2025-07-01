@@ -13,7 +13,7 @@ const NavbarOffcanvas = ({
     searchQuery2,
 }) => {
     const LinkClass =
-        "text-xl lg:text-2xl capitalize font-[Helvetica-regular] w-max text-black hover:text-teal-400 transition ";
+        "text-xl lg:text-2xl capitalize font-[Helvetica-regular] text-black hover:text-teal-400 tracking-wide transition border-b border-neutral-200 py-2.5";
 
     return (
         <nav
@@ -67,23 +67,41 @@ const NavbarOffcanvas = ({
                         </div>
                     </>
                 )}
-                <div className="flex flex-col gap-3 md:pt-0 relative z-30 mt-3 lg:mt-0">
-                    <a href="/" onClick={handleLinkClick} className={LinkClass}>
+                <div className="flex flex-col gap-5 md:pt-0 relative z-30 mt-3 lg:mt-0">
+                    <Link
+                        href={route("home")}
+                        onClick={handleLinkClick}
+                        className={LinkClass}
+                    >
                         Beranda
-                    </a>
-                    <a href="" onClick={handleLinkClick} className={LinkClass}>
+                    </Link>
+                    <Link
+                        href={route("quran.index")}
+                        onClick={handleLinkClick}
+                        className={LinkClass}
+                    >
                         Al-Qur&apos;an
-                    </a>
-                    <a href="" onClick={handleLinkClick} className={LinkClass}>
+                    </Link>
+                    <Link
+                        href={route("doa.index")}
+                        onClick={handleLinkClick}
+                        className={LinkClass}
+                    >
                         Kumpulan Doa
-                    </a>
-                    <hr />
+                    </Link>
+                    <Link
+                        href={route("koleksi")}
+                        onClick={handleLinkClick}
+                        className={LinkClass}
+                    >
+                        Koleksi
+                    </Link>
                     {auth.user ? (
                         <Link
                             href={route("logout")}
                             method="post"
                             as="button"
-                            className={LinkClass}
+                            className="flex items-center text-center bg-red-500 text-white justify-center gap-3 py-2.5 px-4 rounded-3xl border text-base tracking-wide font-[Helvetica-bold]"
                         >
                             Keluar
                         </Link>
@@ -91,7 +109,7 @@ const NavbarOffcanvas = ({
                         <>
                             <Link
                                 href={route("login")}
-                                className="flex items-center text-center bg-blue-700 text-white justify-center gap-3 py-2.5 px-4 rounded-3xl border text-base tracking-wide font-[Helvetica-Regular]"
+                                className="flex items-center text-center bg-blue-700 text-white justify-center gap-3 py-2.5 px-4 rounded-3xl border text-base tracking-wide font-[Helvetica-bold]"
                             >
                                 Masuk
                             </Link>
@@ -104,7 +122,7 @@ const NavbarOffcanvas = ({
                             </div>
                             <Link
                                 href="/auth/redirect/google"
-                                className="flex items-center text-center justify-center gap-3 py-2.5 px-4 rounded-3xl border text-base tracking-wide font-[Helvetica-Regular]"
+                                className="flex items-center text-center justify-center gap-3 py-2.5 px-4 rounded-3xl border text-base tracking-wide font-[Helvetica-Bold]"
                             >
                                 <FaGoogle className="text-orange-400" />{" "}
                                 Lanjutkan dengan Google

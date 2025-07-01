@@ -21,11 +21,11 @@ const Config = ({ auth, config }) => {
     return (
         <AuthenticatedLayout user={auth.user}>
             <Head title="Pengaturan" />
-            <div className="font-poppins py-5 px-8">
+            <div className=" py-5 px-8">
                 <div className="md:flex items-start justify-between mb-3">
-                    <h1 className="text-sm font-bold mb-3 md:mb-0 text-black">
+                    <h1 className="text-sm font-[Helvetica-Bold] tracking-wide mb-3 md:mb-0 text-black">
                         Pengaturan{" "}
-                        <span className="block text-slate-700 font-normal text-xs">
+                        <span className="block text-slate-700 font-[Helvetica-Regular] text-xs">
                             Perbarui informasi aplikasi
                         </span>
                     </h1>
@@ -48,7 +48,7 @@ const Config = ({ auth, config }) => {
                                     name="nama_aplikasi"
                                     value={data.nama_aplikasi}
                                     onChange={handleChange}
-                                    className="w-full border border-gray-300 rounded-md bg-neutral-50 text-sm font-normal text-black"
+                                    className="w-full border border-gray-300 rounded-md bg-neutral-50 text-sm font-[Helvetica-Regular] text-black"
                                     placeholder="Nama Aplikasi.."
                                 />
                                 {errors.nama_aplikasi && (
@@ -71,7 +71,7 @@ const Config = ({ auth, config }) => {
                                     id="deskripsi_aplikasi"
                                     value={data.deskripsi_aplikasi}
                                     onChange={handleChange}
-                                    className="w-full border border-gray-300 rounded-md bg-neutral-50 text-sm font-normal text-black"
+                                    className="w-full border border-gray-300 rounded-md bg-neutral-50 text-sm font-[Helvetica-Regular] text-black"
                                 ></textarea>
 
                                 {errors.deskripsi_aplikasi && (

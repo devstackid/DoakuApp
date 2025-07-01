@@ -66,13 +66,13 @@ const Event = ({ auth, events }) => {
     };
     
 
-    const handleDelete = (userId) => {
+    const handleDelete = (eventId) => {
         if (confirm("Apakah Anda yakin ingin menghapus data ini?")) {
-            router.post(`/dashboard/user/delete/${userId}`, {
+            router.post(`/dashboard/event/delete/${eventId}`, {
                 _method: "delete",
                 onSuccess: () => {
                     setFilteredData((prevData) =>
-                        prevData.filter((user) => user.id !== userId)
+                        prevData.filter((user) => user.id !== eventId)
                     );
                 },
             });
@@ -104,11 +104,11 @@ const Event = ({ auth, events }) => {
     return (
         <AuthenticatedLayout user={auth.user}>
             <Head title="Events" />
-            <div className="font-poppins py-5 px-8">
+            <div className=" py-5 px-8">
                 <div className="md:flex items-start justify-between mb-3">
-                    <h1 className="text-sm font-bold mb-3 md:mb-0 text-black">
+                    <h1 className="text-sm font-[Helvetica-Bold] tracking-wide mb-3 md:mb-0 text-black">
                         Data Acara{" "}
-                        <span className="block text-slate-700 font-normal text-xs">
+                        <span className="block text-slate-700 font-[Helvetica-Regular] text-xs">
                             Anda dapat mengelola data Kalender acara pada halaman ini
                         </span>
                     </h1>
@@ -128,15 +128,15 @@ const Event = ({ auth, events }) => {
                         )}
                         <button
                             onClick={() => setModalEventId("addEvent")}
-                            className="text-xs font-bold text-white px-3 py-2 rounded bg-sky-500"
+                            className="text-xs font-[Helvetica-Bold] tracking-wide text-white px-3 py-2 rounded bg-sky-500"
                         >
                             Tambah Acara
                         </button>
                     </div>
                 </div>
                 <div className="relative overflow-x-auto mt-3 shadow-md sm:rounded-lg w-full">
-                    <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <table className="w-full text-sm text-left text-gray-500 ">
+                        <thead className="text-xs text-gray-700 uppercase bg-gray-50  ">
                             <tr>
                                 <th scope="col" className="px-6 py-3">
                                     #
@@ -160,20 +160,20 @@ const Event = ({ auth, events }) => {
                             {memoizedFilteredData.map((event, i) => (
                                 <tr
                                     key={i}
-                                    className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+                                    className="bg-white border-b "
                                 >
                                     <td className="px-6 py-4">{i + 1}</td>
-                                    <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
                                         {event.tanggal}
                                     </td>
-                                    <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
                                         {event.title}
                                     </td>
                                     <td className="px-6 py-4">{event.deskripsi}</td>
                                     
                                     <td className="px-6 py-4 flex items-center gap-2">
                                         <button
-                                            className="font-medium w-10 h-10 rounded-full bg-neutral-100 flex items-center justify-center text-blue-600 dark:text-blue-500 hover:underline"
+                                            className="font-medium w-10 h-10 rounded-full bg-neutral-100 flex items-center justify-center text-blue-600  hover:underline"
                                             onClick={() =>
                                                 setModalEventId(event.id)
                                             }
@@ -181,7 +181,7 @@ const Event = ({ auth, events }) => {
                                             <BiPencil />
                                         </button>
                                         <button
-                                            className="font-medium w-10 h-10 rounded-full bg-neutral-100 flex items-center justify-center text-red-600 dark:text-red-500 hover:underline"
+                                            className="font-medium w-10 h-10 rounded-full bg-neutral-100 flex items-center justify-center text-red-600  hover:underline"
                                             onClick={() =>
                                                 handleDelete(event.id)
                                             }
@@ -204,10 +204,10 @@ const Event = ({ auth, events }) => {
                         <div className="relative w-full max-w-md max-h-[70vh] bg-white rounded overflow-y-auto">
                             <form
                                 onSubmit={handleSubmit}
-                                className="relative bg-white rounded-lg shadow dark:bg-gray-700"
+                                className="relative bg-white rounded-lg shadow "
                             >
                                 <div className="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
-                                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+                                    <h3 className="text-xl font-semibold text-gray-900 ">
                                         {modalEventId === "addEvent"
                                             ? "Tambah"
                                             : "Ubah"}{" "}
@@ -241,7 +241,7 @@ const Event = ({ auth, events }) => {
                                 <div className="p-6 space-y-3">
                                 <label
                                         htmlFor="tanggal"
-                                        className="block text-sm font-medium text-gray-900 dark:text-white"
+                                        className="block text-sm font-medium text-gray-900 "
                                     >
                                         Tanggal
                                     </label>
@@ -252,7 +252,7 @@ const Event = ({ auth, events }) => {
                                             name="tanggal"
                                             value={values.tanggal}
                                             onChange={handleChange}
-                                            className="w-full border border-gray-300 rounded-md bg-neutral-50 text-sm font-normal text-black"
+                                            className="w-full border border-gray-300 rounded-md bg-neutral-50 text-sm font-[Helvetica-Regular] text-black"
                                         />
                                         {errors.tanggal && (
                                             <div className="text-xs font-medium text-red-500">
@@ -262,7 +262,7 @@ const Event = ({ auth, events }) => {
                                     </div>
                                     <label
                                         htmlFor="title"
-                                        className="block text-sm font-medium text-gray-900 dark:text-white"
+                                        className="block text-sm font-medium text-gray-900 "
                                     >
                                         Title / Judul Acara
                                     </label>
@@ -273,7 +273,7 @@ const Event = ({ auth, events }) => {
                                             name="title"
                                             value={values.title}
                                             onChange={handleChange}
-                                            className="w-full border border-gray-300 rounded-md bg-neutral-50 text-sm font-normal text-black"
+                                            className="w-full border border-gray-300 rounded-md bg-neutral-50 text-sm font-[Helvetica-Regular] text-black"
                                             placeholder="Nama Acara.."
                                         />
                                         {errors.title && (
@@ -285,7 +285,7 @@ const Event = ({ auth, events }) => {
 
                                     <label
                                         htmlFor="deskripsi"
-                                        className="block text-sm font-medium text-gray-900 dark:text-white"
+                                        className="block text-sm font-medium text-gray-900 "
                                     >
                                         Tanggal / Tahun (H)
                                     </label>
@@ -297,7 +297,7 @@ const Event = ({ auth, events }) => {
                                             value={values.deskripsi}
                                             onChange={handleChange}
                                             placeholder="Tanggal Hijriah.."
-                                            className="w-full border border-gray-300 rounded-md bg-neutral-50 text-sm font-normal text-black"
+                                            className="w-full border border-gray-300 rounded-md bg-neutral-50 text-sm font-[Helvetica-Regular] text-black"
                                         />
                                         {errors.deskripsi && (
                                             <div className="text-xs font-medium text-red-500">
@@ -319,7 +319,7 @@ const Event = ({ auth, events }) => {
                                     </button>
                                     <button
                                         type="button"
-                                        className="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600"
+                                        className="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10  dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600"
                                         onClick={() => setModalEventId(null)}
                                     >
                                         Batal

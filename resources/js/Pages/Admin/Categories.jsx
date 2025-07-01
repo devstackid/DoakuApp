@@ -58,9 +58,6 @@ const Categories = ({ auth, categories }) => {
             onSuccess: () => {
                 setModalCategoryId(null);
                 resetForm();
-            },
-            onError: (errors) => {
-                console.log("Errors:", errors);
             }
         });
     };
@@ -82,13 +79,8 @@ const Categories = ({ auth, categories }) => {
     useEffect(() => {
         setFilteredData(
             categories.filter(
-                (theme) =>
-                    theme.name
-                        .toLowerCase()
-                        .includes(search.toLowerCase()) ||
-                    theme.description
-                        .toLowerCase()
-                        .includes(search.toLowerCase())
+                (category) =>
+                    category.name.toLowerCase().includes(search.toLowerCase())
             )
         );
     }, [search, categories]);
@@ -105,11 +97,11 @@ const Categories = ({ auth, categories }) => {
     return (
         <AuthenticatedLayout user={auth.user}>
             <Head title="Categories" />
-            <div className="font-poppins py-5 px-8 overflow-y-auto md:max-h-screen">
+            <div className="py-5 px-8 overflow-y-auto md:max-h-screen">
                 <div className="md:flex items-start justify-between mb-3">
-                    <h1 className="text-sm font-bold mb-3 md:mb-0 text-black">
+                    <h1 className="text-sm font-[Helvetica-Bold] tracking-wide mb-3 md:mb-0 text-black">
                         Data Kategori{" "}
-                        <span className="block text-slate-700 font-normal text-xs">
+                        <span className="block text-slate-700 font-[Helvetica-Regular] text-xs">
                             Anda dapat mengelola data kategori doa pada halaman ini
                         </span>
                     </h1>
@@ -129,15 +121,15 @@ const Categories = ({ auth, categories }) => {
                         )}
                         <button
                             onClick={() => setModalCategoryId("addCategory")}
-                            className="text-xs font-bold text-white px-3 py-2 rounded bg-sky-500"
+                            className="text-xs font-[Helvetica-Bold] tracking-wide text-white px-3 py-2 rounded bg-sky-500"
                         >
                             Buat
                         </button>
                     </div>
                 </div>
                 <div className="relative overflow-x-auto mt-3 shadow-md sm:rounded-lg w-full">
-                    <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <table className="w-full text-sm text-left text-gray-500 ">
+                        <thead className="text-xs text-gray-700 uppercase bg-gray-50 ">
                             <tr>
                                 <th scope="col" className="px-6 py-3">
                                     #
@@ -158,10 +150,10 @@ const Categories = ({ auth, categories }) => {
                             {memoizedFilteredData.map((category, i) => (
                                 <tr
                                     key={i}
-                                    className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+                                    className="bg-white border-b "
                                 >
                                     <td className="px-6 py-4">{i + 1}</td>
-                                    <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    <td className="px-6 py-4 font-[Helvetica-Regular] tracking-wide text-gray-900 whitespace-nowrap ">
                                         {category.name}
                                     </td>
                                     <td className="px-6 py-4">
@@ -171,7 +163,7 @@ const Categories = ({ auth, categories }) => {
 
                                     <td className="px-6 py-4 flex items-center gap-2">
                                         <button
-                                            className="font-medium w-10 h-10 rounded-full bg-neutral-100 flex items-center justify-center text-blue-600 dark:text-blue-500 hover:underline"
+                                            className="font-[Helvetica-Regular] tracking-wide w-10 h-10 rounded-full bg-neutral-100 flex items-center justify-center text-blue-600  hover:underline"
                                             onClick={() =>
                                                 setModalCategoryId(category.id)
                                             }
@@ -179,7 +171,7 @@ const Categories = ({ auth, categories }) => {
                                             <BiPencil />
                                         </button>
                                         <button
-                                            className="font-medium w-10 h-10 rounded-full bg-neutral-100 flex items-center justify-center text-red-600 dark:text-red-500 hover:underline"
+                                            className="font-[Helvetica-Regular] tracking-wide w-10 h-10 rounded-full bg-neutral-100 flex items-center justify-center text-red-600  hover:underline"
                                             onClick={() =>
                                                 handleDelete(category.id)
                                             }
@@ -202,10 +194,10 @@ const Categories = ({ auth, categories }) => {
                         <div className="relative w-full max-w-md max-h-[70vh] bg-white rounded overflow-y-auto">
                             <form
                                 onSubmit={handleSubmit}
-                                className="relative bg-white rounded-lg shadow dark:bg-gray-700"
+                                className="relative bg-white rounded-lg shadow "
                             >
-                                <div className="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
-                                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+                                <div className="flex items-start justify-between p-4 border-b rounded-t ">
+                                    <h3 className="text-xl font-semibold text-gray-900 ">
                                         {modalCategoryId === "addCategory"
                                             ? "Tambah"
                                             : "Ubah"}{" "}
@@ -213,7 +205,7 @@ const Categories = ({ auth, categories }) => {
                                     </h3>
                                     <button
                                         type="button"
-                                        className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                                        className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center "
                                         onClick={() => setModalCategoryId(null)}
                                     >
                                         <svg
@@ -239,7 +231,7 @@ const Categories = ({ auth, categories }) => {
                                 <div className="p-6 space-y-3">
                                     <label
                                         htmlFor="name"
-                                        className="block text-sm font-medium text-gray-900 dark:text-white"
+                                        className="block text-sm font-[Helvetica-Regular] tracking-wide text-gray-900 "
                                     >
                                         Kategori
                                     </label>
@@ -250,11 +242,11 @@ const Categories = ({ auth, categories }) => {
                                             name="name"
                                             value={values.name}
                                             onChange={handleChange}
-                                            className="w-full border border-gray-300 rounded-md bg-neutral-50 text-sm font-normal text-black"
+                                            className="w-full border border-gray-300 rounded-md bg-neutral-50 text-sm font-[Helvetica-Regular] text-black"
                                             placeholder="Nama Kategori.."
                                         />
                                         {errors.name && (
-                                            <div className="text-xs font-medium text-red-500">
+                                            <div className="text-xs font-[Helvetica-Regular] tracking-wide text-red-500">
                                                 {errors.name}
                                             </div>
                                         )}
@@ -262,7 +254,7 @@ const Categories = ({ auth, categories }) => {
 
                                     <label
                                         htmlFor="description"
-                                        className="block text-sm font-medium text-gray-900 dark:text-white"
+                                        className="block text-sm font-[Helvetica-Regular] tracking-wide text-gray-900 "
                                     >
                                         Deskripsi
                                     </label>
@@ -274,10 +266,10 @@ const Categories = ({ auth, categories }) => {
                                             value={values.description}
                                             onChange={handleChange}
                                             placeholder="Description.."
-                                            className="w-full border border-gray-300 rounded-md bg-neutral-50 text-sm font-normal text-black"
+                                            className="w-full border border-gray-300 rounded-md bg-neutral-50 text-sm font-[Helvetica-Regular] text-black"
                                         />
                                         {errors.description && (
-                                            <div className="text-xs font-medium text-red-500">
+                                            <div className="text-xs font-[Helvetica-Regular] tracking-wide text-red-500">
                                                 {errors.description}
                                             </div>
                                         )}
@@ -285,10 +277,10 @@ const Categories = ({ auth, categories }) => {
 
                                     
                                 </div>
-                                <div className="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
+                                <div className="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b ">
                                     <button
                                         type="submit"
-                                        className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                                        className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-[Helvetica-Regular] tracking-wide rounded-lg text-sm px-5 py-2.5 text-center "
                                     >
                                         {modalCategoryId === "addCategory"
                                             ? "Tambah"
@@ -296,7 +288,7 @@ const Categories = ({ auth, categories }) => {
                                     </button>
                                     <button
                                         type="button"
-                                        className="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600"
+                                        className="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-[Helvetica-Regular] tracking-wide px-5 py-2.5 hover:text-gray-900 focus:z-10  "
                                         onClick={() => setModalCategoryId(null)}
                                     >
                                         Batal
